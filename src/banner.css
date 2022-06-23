@@ -1,0 +1,49 @@
+/* =========================================== */
+/* NOTE: Contain the banner within video frame */
+/* REF: https://stackoverflow.com/a/46318225   */
+/* =========================================== */
+#video-inner-container {
+  position: relative;
+}
+
+#banner {
+  position: absolute;
+}
+
+/* ======================================================================================================= */
+/* NOTE: Remove padding added by default to <img>, <video> being inline elements                           */
+/* REF: https://www.sitepoint.com/community/t/container-problem-getting-an-extra-6px-added-to-height/89499 */
+/* ======================================================================================================= */
+video,
+img {
+  display: block;
+}
+
+/* ====================================================================== */
+/* NOTE: Let banner resize automatically in proportion to video dimension */
+/* ====================================================================== */
+#banner {
+  aspect-ratio: auto; /* This is not needed. Just wanted to be explicit */
+  object-fit: contain; /* REF: https://stackoverflow.com/a/30794589 */
+  height: 50%;
+  width: auto; /* REF: https://stackoverflow.com/a/6318299 */
+}
+
+/* ======================================================= */
+/* NOTE: Banner positioning relative to `#video-outer-container` */
+/* ======================================================= */
+#banner {
+  /* `vmin` is used so that the positioning is dynamic and will not result in awkward spacing like `vmax` */
+  top: 4vmin;
+  left: 4vmin;
+}
+
+/* ============================================== */
+/* NOTE: This allows hiding and showing of banner */
+/* ============================================== */
+#banner {
+  display: none;
+}
+#banner.visible {
+  display: initial;
+}

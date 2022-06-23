@@ -1,0 +1,383 @@
+:root {
+  --button-length: 24px;
+  --very-small-gap: 4px;
+  --small-gap: 8px;
+  --medium-gap: 12px;
+  --big-gap: 16px;
+  --white: #ffffff;
+  --off-white: #e9e9e9;
+  --slider-and-track-shadow: 1px 1px 1px #00000022;
+  --track-height: 4px;
+  --timeline-marker-width: 8px;
+  --timeline-slider-color: deeppink;
+  --timeline-track-color: hotpink;
+  --fade: opacity 500ms ease-in-out;
+}
+
+/* ================================================================= */
+/* NOTE: Contain the overlay and player within video outer container */
+/* REF: https://stackoverflow.com/a/46318225                         */
+/* ================================================================= */
+#video-outer-container {
+  position: relative;
+}
+
+#player {
+  position: absolute;
+}
+
+#overlay {
+  position: absolute;
+  z-index: 10; /* NOTE: Keep player above overlay */
+}
+
+/* ===================================== */
+/* NOTE: Overlay and play button styling */
+/* ===================================== */
+#overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: var(--off-white);
+  background-color: #00000066;
+}
+
+#overlay:hover {
+  color: var(--white);
+}
+
+#overlay-play-button {
+  width: 15%;
+  height: 15%;
+  fill: currentColor;
+}
+
+/* ======================================== */
+/* NOTE: Overlay and play button transition */
+/* ======================================== */
+
+#overlay {
+  opacity: 0;
+  transition: var(--fade);
+}
+
+#overlay.visible {
+  opacity: 1;
+}
+
+/* ============================= */
+/* NOTE: Place player over video */
+/* ============================= */
+#player {
+  padding: var(--medium-gap) var(--big-gap);
+  left: 0;
+  bottom: 0;
+  z-index: 20; /* NOTE: Keep player above overlay */
+}
+
+/* ========================================================== */
+/* NOTE: Hide and disable player unless `.visible` is present */
+/* ========================================================== */
+#player {
+  pointer-events: none;
+  opacity: 0;
+  transition: var(--fade);
+}
+
+#player.visible {
+  pointer-events: initial;
+  opacity: 1;
+}
+
+/* ==================================== */
+/* NOTE: Flex as column to get two rows */
+/* ==================================== */
+#player {
+  display: flex;
+  flex-direction: column;
+  gap: var(--big-gap);
+  width: 100%;
+}
+
+/* ==================================== */
+/* NOTE: Player translucent background  */
+/* ==================================== */
+#player {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.2) 60%,
+    rgba(0, 0, 0, 0.1) 70%,
+    rgba(0, 0, 0, 0.05) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* ============================= */
+/* NOTE: Reset button appearance */
+/* ============================= */
+#player button {
+  width: var(--button-length);
+  height: var(--button-length);
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================================= */
+/* NOTE: Set fill color of SVG icons */
+/* ================================= */
+#player button > svg {
+  color: var(--off-white);
+  fill: currentColor;
+}
+
+#player button > svg:hover {
+  color: var(--white);
+}
+
+/* ============================================== */
+/* NOTE: Ensure timeline spans across video width */
+/* ============================================== */
+#timeline-track.first-row,
+#timeline-track #timeline-slider {
+  width: 100%;
+}
+
+/* ===================================== */
+/* NOTE: Reset appearance of range input */
+/* ===================================== */
+#timeline-track #timeline-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* ============================================= */
+/* NOTE: Appearance of timeline track and slider */
+/* ============================================= */
+#timeline-track,
+#timeline-track #timeline-slider::-webkit-slider-thumb {
+  box-shadow: var(--slider-and-track-shadow);
+}
+
+#timeline-track {
+  margin: 16px 0 0 0;
+  height: var(--track-height);
+  border-radius: 8px; /* NOTE: Ensure timeline slider reaches the end of the track */
+  background-color: var(--timeline-track-color);
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+#timeline-track #timeline-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--timeline-slider-color);
+  border-radius: 8px;
+  height: 16px;
+  width: 16px;
+}
+
+/* Firefox */
+#timeline-track #timeline-slider::-moz-range-thumb {
+  border: none; /* NOTE: Removes extra border that Firefox applies */
+  border-radius: 8px;
+  background-color: var(--timeline-slider-color);
+  height: 16px;
+  width: 16px;
+}
+
+/* ============================================== */
+/* NOTE: Position slider on top of timeline track */
+/* ============================================== */
+#timeline-track #timeline-slider {
+  position: absolute;
+}
+
+#timeline-track {
+  position: relative;
+}
+
+/* ========================================== */
+/* NOTE: Ensure slider is vertically centered */
+/* ========================================== */
+#timeline-track #timeline-slider {
+  top: -6px;
+}
+
+/* NOTE: Timeline marker */
+.timeline-marker {
+  height: var(--track-height);
+  width: var(--timeline-marker-width);
+  background-color: lightgoldenrodyellow;
+  position: absolute;
+}
+
+/* ================================================= */
+/* NOTE: Flex as a row with guaranteed space between */
+/* ================================================= */
+#player > .second-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* ======================================================= */
+/* NOTE: Flex as a row with guaranteed gap between buttons */
+/* ======================================================= */
+#player > .second-row > .left-buttons,
+#player > .second-row > .right-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--big-gap);
+}
+
+/* ================================= */
+/* NOTE: Prevent wrapping of buttons */
+/* ================================= */
+#player > .second-row > .left-buttons,
+#player > .second-row > .right-buttons {
+  flex: none;
+}
+
+/* ============================== */
+/* NOTE: Volume slider transition */
+/* ============================== */
+#player #volume-slider.visible {
+  width: 100%;
+}
+#player #volume-slider {
+  width: 0;
+  transition: all ease-in-out 500ms;
+}
+
+/* ========================= */
+/* NOTE: Style volume slider */
+/* ========================= */
+#player #volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+#player #volume-slider::-webkit-slider-runnable-track {
+  margin: 0;
+  height: var(--track-height);
+  border-radius: 8px;
+  background-color: var(--timeline-track-color);
+  box-shadow: var(--slider-and-track-shadow);
+}
+
+/* Firefox */
+#player #volume-slider::-moz-range-track {
+  margin: 16px 0 0 0;
+  height: var(--track-height);
+  border-radius: 8px;
+  background-color: var(--timeline-track-color);
+  box-shadow: var(--slider-and-track-shadow);
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+#player #volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#player #volume-slider.visible::-webkit-slider-thumb {
+  background-color: var(--timeline-slider-color);
+  border-radius: 8px;
+  height: 16px;
+  width: 16px;
+  margin-top: -6px; /* NOTE: Centers thumb on the track */
+  box-shadow: var(--slider-and-track-shadow);
+}
+
+/* Firefox */
+#player #volume-slider::-moz-range-thumb {
+  background-color: var(--timeline-slider-color);
+  border: none; /* NOTE: Removes extra border that Firefox applies */
+}
+
+#player #volume-slider.visible::-moz-range-thumb {
+  border-radius: 8px;
+  height: 16px;
+  width: 16px;
+  box-shadow: var(--slider-and-track-shadow);
+}
+
+/* ======================================== */
+/* NOTE: Set icons to no display as default */
+/* ======================================== */
+#player #play-icon,
+#player #pause-icon,
+#player #volume-on-icon,
+#player #volume-off-icon,
+#player #full-screen-enter-icon,
+#player #full-screen-exit-icon {
+  display: none;
+}
+
+/* ============================================== */
+/* NOTE: Use `.visible` to toggling between icons */
+/* ============================================== */
+#player #play-icon.visible,
+#player #pause-icon.visible,
+#player #volume-on-icon.visible,
+#player #volume-off-icon.visible,
+#player #volume-slider.visible,
+#player #full-screen-enter-icon.visible,
+#player #full-screen-exit-icon.visible {
+  display: initial;
+}
+
+/* ================================================================= */
+/* NOTE: Manually tuned icon dimensions to make them look consistent */
+/* ================================================================= */
+#player #full-screen-enter-icon,
+#player #full-screen-exit-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#player #play-icon,
+#player #pause-icon {
+  height: 18px;
+  width: 18px;
+}
+
+#player #volume-on-icon,
+#player #volume-off-icon {
+  width: var(--button-length);
+  height: var(--button-length);
+}
+
+/* =========================================================== */
+/* NOTE: Styled and added text shadow to guarantee readability */
+/* =========================================================== */
+#player #time-display {
+  user-select: none;
+  color: var(--off-white);
+  font-weight: 500;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+#player #separator {
+  padding: 0 var(--very-small-gap) 0 var(--very-small-gap);
+}
+
+#volume-button {
+  display: flex;
+  gap: var(--small-gap);
+}

@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+main {
+  width: 100%;
+  height: 100%;
+}
+
+html,
+body,
+main,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ================================================================================================ */
+/* NOTE: Suspending video container in flex box to showcase dynamic resizing and position of banner */
+/* ================================================================================================ */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ====================================================================================== */
+/* NOTE: Outer video container vertically centers video, player and banner in full screen */
+/* ====================================================================================== */
+#video-outer-container {
+  display: flex;
+  align-items: center;
+}
+
+/* =================================================================================== */
+/* NOTE: Set video inner container to take full width of outer container               */
+/* NOTE: But restrict maximum height to `100vmin` so video will always be full visible */
+/* =================================================================================== */
+#video-inner-container,
+video {
+  width: 100%;
+  max-height: 100vmin;
+}
