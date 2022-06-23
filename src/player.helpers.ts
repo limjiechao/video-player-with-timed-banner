@@ -152,8 +152,17 @@ export const toggleBetweenEnterAndExitFullScreenIcon = (
 
 export const toggleFullScreen = (isFullScreen: boolean) => {
   if (isFullScreen) {
-    void document.exitFullscreen();
+    const exitFullScreen =
+      document.exitFullscreen ||
+      // @ts-ignore
+      (document.webkitExitFullscreen as () => Promise<void>);
+    void exitFullScreen();
   } else if (videoOuterContainer.requestFullscreen) {
-    void videoOuterContainer.requestFullscreen();
+    const requestFullScreen =
+      videoOuterContainer.requestFullscreen ||
+      // @ts-ignore
+      (videoOuterContainer.webkitRequestFullscreen as () => Promise<void>);
+
+    void requestFullScreen();
   }
 };

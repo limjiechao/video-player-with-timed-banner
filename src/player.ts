@@ -148,7 +148,13 @@ const updateCurrentTimeDisplay = () => {
 const enterOrExitFullScreen = (event: Event) => {
   event.stopPropagation();
 
-  const isFullScreen = !Object.is(document.fullscreenElement, null);
+  // NOTE: Support for Safari
+  const fullScreenElement =
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    document.fullscreenElement || document.webkitFullscreenElement;
+
+  const isFullScreen = !Object.is(fullScreenElement, null);
 
   toggleFullScreen(isFullScreen);
 };
