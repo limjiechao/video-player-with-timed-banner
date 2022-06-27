@@ -10,14 +10,29 @@ import {
   volumeSlider,
 } from './elements';
 
+export const checkIsIosSafari = () =>
+  navigator.userAgent.indexOf('Mobile') > -1 &&
+  navigator.userAgent.indexOf('Safari') > -1 &&
+  navigator.userAgent.indexOf('Chrome') <= -1;
+
 export const disableVolumeSliderTransitionForSafari = () => {
-  const isSafariBrowser =
-    navigator.userAgent.indexOf('Safari') > -1 &&
-    navigator.userAgent.indexOf('Chrome') <= -1;
+  const isSafariBrowser = checkIsIosSafari();
 
   if (isSafariBrowser) {
     volumeSlider.classList.add('safari');
   }
+};
+
+export const addFullScreenClassToVideoElementIfIosSafari = () => {
+  const isSafariBrowser = checkIsIosSafari();
+
+  isSafariBrowser && video.classList.add('full-screen');
+};
+
+export const removeFullScreenClassToVideoElementIfIosSafari = () => {
+  const isSafariBrowser = checkIsIosSafari();
+
+  isSafariBrowser && video.classList.remove('full-screen');
 };
 
 export const getVideoDuration = async () => {
@@ -167,30 +182,48 @@ export const toggleBetweenEnterAndExitFullScreenIcon = (
 };
 
 export const toggleFullScreen = (isFullScreen: boolean) => {
+  const isIosSafari = checkIsIosSafari();
+
   switch (isFullScreen) {
     case true: {
+      removeFullScreenClassToVideoElementIfIosSafari();
+
       const exitFullScreen =
         document.exitFullscreen ||
-        // NOTE: Support for Safari
+        // NOTE: Support for macOS Safari
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        (document.webkitExitFullscreen as () => Promise<void>);
+        (document.webkitExitFullscreen as () => Promise<void>) ||
+        // NOTE: Support for iOS Safari
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (video.webkitExitFullscreen as () => Promise<void>);
+
+      const targetElementToExitFullScreen = isIosSafari ? video : document;
 
       // REF: https://www.reddit.com/r/learnjavascript/comments/6tdsqf/comment/dlkce0r/
-      void exitFullScreen.call(document);
+      void exitFullScreen.call(targetElementToExitFullScreen);
       break;
     }
     case false: {
+      addFullScreenClassToVideoElementIfIosSafari();
       const requestFullScreen =
         videoOuterContainer.requestFullscreen ||
-        // NOTE: Support for Safari
+        // NOTE: Support for macOS Safari
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        (videoOuterContainer.webkitRequestFullscreen as () => Promise<void>);
+        (videoOuterContainer.webkitRequestFullscreen as () => Promise<void>) ||
+        // NOTE: Support for iOS Safari
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (video.webkitEnterFullscreen as () => Promise<void>);
 
-      console.log(requestFullScreen);
+      const targetElementToEnterFullScreen = isIosSafari
+        ? video
+        : videoOuterContainer;
+
       // REF: https://www.reddit.com/r/learnjavascript/comments/6tdsqf/comment/dlkce0r/
-      void requestFullScreen.call(videoOuterContainer);
+      void requestFullScreen.call(targetElementToEnterFullScreen);
       break;
     }
   }

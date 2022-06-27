@@ -60,11 +60,13 @@
 
 #overlay {
   opacity: 0;
+  pointer-events: none;
   transition: var(--fade);
 }
 
 #overlay.visible {
   opacity: 1;
+  pointer-events: auto;
 }
 
 /* ============================= */

@@ -18,14 +18,14 @@ import {
   createDebouncer,
   formatDisplayTime,
   getVideoDuration,
+  hideVolumeButton,
   playOrPauseVideo,
   showOrHideVolumeSlider,
   toggleBetweenEnterAndExitFullScreenIcon,
   toggleBetweenPlayAndPauseIcon,
   toggleFullScreen,
-  toggleVolumeIcon,
   toggleVolumeButton,
-  hideVolumeButton,
+  toggleVolumeIcon,
 } from './player.helpers';
 import { bannerDisplay } from './banner';
 
@@ -150,9 +150,13 @@ const enterOrExitFullScreen = (event: Event) => {
 
   // NOTE: Support for Safari
   const fullScreenElement =
+    document.fullscreenElement ||
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    document.fullscreenElement || document.webkitFullscreenElement;
+    document.webkitFullscreenElement ||
+    video.classList.contains('ios-full-screen')
+      ? video
+      : null;
 
   const isFullScreen = !Object.is(fullScreenElement, null);
 
