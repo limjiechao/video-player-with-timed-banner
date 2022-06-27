@@ -18,7 +18,7 @@ export const checkIsSafari = () =>
 export const checkIsIosSafari = () =>
   navigator.userAgent.indexOf('Mobile') > -1 && checkIsSafari();
 
-export const disableVolumeSliderTransitionForSafari = () => {
+export const disableVolumeSliderTransitionForMacosSafari = () => {
   const isSafariBrowser = checkIsSafari();
 
   if (isSafariBrowser) {
@@ -32,12 +32,14 @@ export const removeVolumeButtonIfIosSafari = () => {
   isIosSafariBrowser && volumeButton.classList.add('ios-safari-no-volume');
 };
 
+// NOTE: This allows us to track if video is full screen on iOS Safari
 export const addFullScreenClassToVideoElementIfIosSafari = () => {
   const isIosSafariBrowser = checkIsIosSafari();
 
   isIosSafariBrowser && video.classList.add('full-screen');
 };
 
+// NOTE: This allows us to track if video is full screen on iOS Safari
 export const removeFullScreenClassToVideoElementIfIosSafari = () => {
   const isIosSafariBrowser = checkIsIosSafari();
 

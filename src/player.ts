@@ -149,12 +149,12 @@ const updateCurrentTimeDisplay = () => {
 const enterOrExitFullScreen = (event: Event) => {
   event.stopPropagation();
 
-  // NOTE: Support for Safari
   const fullScreenElement =
     document.fullscreenElement ||
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     document.webkitFullscreenElement ||
+    // NOTE: This allows us to know if video is full screen on iOS Safari
     video.classList.contains('ios-safari-full-screen')
       ? video
       : null;

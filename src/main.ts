@@ -7,7 +7,7 @@ import {
 } from './player';
 import { videoOuterContainer } from './elements';
 import {
-  disableVolumeSliderTransitionForSafari,
+  disableVolumeSliderTransitionForMacosSafari,
   removeVolumeButtonIfIosSafari,
 } from './player.helpers';
 
@@ -16,9 +16,12 @@ const disableVideoContextMenu = () => {
 };
 
 document.addEventListener('readystatechange', () => {
+  // NOTE: Disable menu when right-clicking
   disableVideoContextMenu();
 
-  disableVolumeSliderTransitionForSafari();
+  // NOTE: Adjustments for macOS Safari
+  disableVolumeSliderTransitionForMacosSafari();
+  // NOTE: Adjustments for iOS Safari
   removeVolumeButtonIfIosSafari();
 
   void setDurationDisplay();
