@@ -40,6 +40,13 @@ main {
   align-items: center;
 }
 
+/* ================================== */
+/* NOTE: For macOS Safari full screen */
+/* ================================== */
+#video-outer-container {
+  background-color: black;
+}
+
 /* =================================================================================== */
 /* NOTE: Set video inner container to take full width of outer container               */
 /* NOTE: But restrict maximum height to `100vmin` so video will always be full visible */
