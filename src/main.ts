@@ -6,6 +6,7 @@ import {
   setTimelineMarker,
 } from './player';
 import { videoOuterContainer } from './elements';
+import { disableVolumeSliderTransitionForSafari } from './player.helpers';
 
 const disableVideoContextMenu = () => {
   videoOuterContainer.oncontextmenu = () => false;
@@ -13,6 +14,7 @@ const disableVideoContextMenu = () => {
 
 document.addEventListener('readystatechange', () => {
   disableVideoContextMenu();
+  disableVolumeSliderTransitionForSafari();
   void setDurationDisplay();
   void setTimelineMarker();
 

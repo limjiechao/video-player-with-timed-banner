@@ -10,6 +10,16 @@ import {
   volumeSlider,
 } from './elements';
 
+export const disableVolumeSliderTransitionForSafari = () => {
+  const isSafariBrowser =
+    navigator.userAgent.indexOf('Safari') > -1 &&
+    navigator.userAgent.indexOf('Chrome') <= -1;
+
+  if (isSafariBrowser) {
+    volumeSlider.classList.add('safari');
+  }
+};
+
 export const getVideoDuration = async () => {
   return video.duration
     ? video.duration
@@ -37,6 +47,7 @@ export const createDebouncer = (delay = 2000) => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
+
       timeoutId = setTimeout(() => {
         task();
         resolve();
@@ -45,10 +56,15 @@ export const createDebouncer = (delay = 2000) => {
 };
 
 export const playOrPauseVideo = () => {
-  if (video.paused) {
-    void video.play();
-  } else {
-    video.pause();
+  switch (video.paused) {
+    case true: {
+      void video.play();
+      break;
+    }
+    case false: {
+      video.pause();
+      break;
+    }
   }
 };
 
@@ -114,7 +130,7 @@ export const toggleVolumeIcon = (acceptedVolumeInput: number) => {
 export const padToTwoDigits = (time: number) => String(time).padStart(2, '0');
 
 export const formatDisplayTime = (time: number) => {
-  const seconds = Math.round(time);
+  const seconds = Math.floor(time);
   const secondDisplay = seconds % 60;
   const minutes = (seconds - secondDisplay) / 60;
   const minuteDisplay = minutes % 60;
@@ -151,18 +167,31 @@ export const toggleBetweenEnterAndExitFullScreenIcon = (
 };
 
 export const toggleFullScreen = (isFullScreen: boolean) => {
-  if (isFullScreen) {
-    const exitFullScreen =
-      document.exitFullscreen ||
-      // @ts-ignore
-      (document.webkitExitFullscreen as () => Promise<void>);
-    void exitFullScreen();
-  } else if (videoOuterContainer.requestFullscreen) {
-    const requestFullScreen =
-      videoOuterContainer.requestFullscreen ||
-      // @ts-ignore
-      (videoOuterContainer.webkitRequestFullscreen as () => Promise<void>);
+  switch (isFullScreen) {
+    case true: {
+      const exitFullScreen =
+        document.exitFullscreen ||
+        // NOTE: Support for Safari
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (document.webkitExitFullscreen as () => Promise<void>);
 
-    void requestFullScreen();
+      // REF: https://www.reddit.com/r/learnjavascript/comments/6tdsqf/comment/dlkce0r/
+      void exitFullScreen.call(document);
+      break;
+    }
+    case false: {
+      const requestFullScreen =
+        videoOuterContainer.requestFullscreen ||
+        // NOTE: Support for Safari
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (videoOuterContainer.webkitRequestFullscreen as () => Promise<void>);
+
+      console.log(requestFullScreen);
+      // REF: https://www.reddit.com/r/learnjavascript/comments/6tdsqf/comment/dlkce0r/
+      void requestFullScreen.call(videoOuterContainer);
+      break;
+    }
   }
 };

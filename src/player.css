@@ -256,9 +256,18 @@
 #player #volume-slider.visible {
   width: 100%;
 }
+
 #player #volume-slider {
   width: 0;
   transition: all ease-in-out 500ms;
+}
+
+#player #volume-slider.visible.safari {
+  display: initial;
+}
+
+#player #volume-slider.safari {
+  display: none;
 }
 
 /* ========================= */
