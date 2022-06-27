@@ -252,6 +252,10 @@
   flex: none;
 }
 
+#player #volume-button.ios-safari-no-volume {
+  display: none;
+}
+
 /* ============================== */
 /* NOTE: Volume slider transition */
 /* ============================== */

@@ -5,34 +5,43 @@ import {
   playIcon,
   video,
   videoOuterContainer,
+  volumeButton,
   volumeOffIcon,
   volumeOnIcon,
   volumeSlider,
 } from './elements';
 
-export const checkIsIosSafari = () =>
-  navigator.userAgent.indexOf('Mobile') > -1 &&
+export const checkIsSafari = () =>
   navigator.userAgent.indexOf('Safari') > -1 &&
   navigator.userAgent.indexOf('Chrome') <= -1;
 
+export const checkIsIosSafari = () =>
+  navigator.userAgent.indexOf('Mobile') > -1 && checkIsSafari();
+
 export const disableVolumeSliderTransitionForSafari = () => {
-  const isSafariBrowser = checkIsIosSafari();
+  const isSafariBrowser = checkIsSafari();
 
   if (isSafariBrowser) {
     volumeSlider.classList.add('safari');
   }
 };
 
-export const addFullScreenClassToVideoElementIfIosSafari = () => {
-  const isSafariBrowser = checkIsIosSafari();
+export const removeVolumeButtonIfIosSafari = () => {
+  const isIosSafariBrowser = checkIsIosSafari();
 
-  isSafariBrowser && video.classList.add('full-screen');
+  isIosSafariBrowser && volumeButton.classList.add('ios-safari-no-volume');
+};
+
+export const addFullScreenClassToVideoElementIfIosSafari = () => {
+  const isIosSafariBrowser = checkIsIosSafari();
+
+  isIosSafariBrowser && video.classList.add('full-screen');
 };
 
 export const removeFullScreenClassToVideoElementIfIosSafari = () => {
-  const isSafariBrowser = checkIsIosSafari();
+  const isIosSafariBrowser = checkIsIosSafari();
 
-  isSafariBrowser && video.classList.remove('full-screen');
+  isIosSafariBrowser && video.classList.remove('full-screen');
 };
 
 export const getVideoDuration = async () => {

@@ -63,6 +63,7 @@ export const setDurationDisplay = async () => {
 const playVideoAndHideOverlay = () => {
   playOrPauseVideo();
   overlay.classList.remove('visible');
+  toggleBetweenPlayAndPauseIcon();
 };
 
 const debounceOverlayFadeOut = createDebouncer();
@@ -154,7 +155,7 @@ const enterOrExitFullScreen = (event: Event) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     document.webkitFullscreenElement ||
-    video.classList.contains('ios-full-screen')
+    video.classList.contains('ios-safari-full-screen')
       ? video
       : null;
 
