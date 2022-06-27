@@ -46,6 +46,20 @@ export const removeFullScreenClassToVideoElementIfIosSafari = () => {
   isIosSafariBrowser && video.classList.remove('full-screen');
 };
 
+export const removePresetVideoDimensions = () => {
+  if (video.height && video.width) {
+    video.removeAttribute('height');
+    video.removeAttribute('width');
+    video.classList.add('full-width');
+  }
+
+  const removeVideoDimensionAttributes = () => {
+    video.removeEventListener('loadedmetadata', removeVideoDimensionAttributes);
+  };
+
+  video.addEventListener('loadedmetadata', removeVideoDimensionAttributes);
+};
+
 export const getVideoDuration = async () => {
   return video.duration
     ? video.duration

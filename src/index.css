@@ -51,8 +51,8 @@ main {
 /* NOTE: Set video inner container to take full width of outer container               */
 /* NOTE: But restrict maximum height to `100vmin` so video will always be full visible */
 /* =================================================================================== */
-#video-inner-container,
-video {
+#video-inner-container.full-width,
+#video.full-width {
   width: 100%;
   max-height: 100vmin;
 }

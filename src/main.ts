@@ -8,6 +8,7 @@ import {
 import { videoOuterContainer } from './elements';
 import {
   disableVolumeSliderTransitionForMacosSafari,
+  removePresetVideoDimensions,
   removeVolumeButtonIfIosSafari,
 } from './player.helpers';
 
@@ -16,6 +17,7 @@ const disableVideoContextMenu = () => {
 };
 
 document.addEventListener('readystatechange', () => {
+  removePresetVideoDimensions();
   // NOTE: Disable menu when right-clicking
   disableVideoContextMenu();
 
