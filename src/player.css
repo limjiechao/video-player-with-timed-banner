@@ -191,6 +191,7 @@
 
 /* Firefox */
 #timeline-track #timeline-slider::-moz-range-thumb {
+  appearance: none;
   border: none; /* NOTE: Removes extra border that Firefox applies */
   border-radius: 8px;
   background-color: var(--timeline-slider-color);
@@ -256,26 +257,6 @@
   display: none;
 }
 
-/* ============================== */
-/* NOTE: Volume slider transition */
-/* ============================== */
-#player #volume-slider.visible {
-  width: 100%;
-}
-
-#player #volume-slider {
-  width: 0;
-  transition: all ease-in-out 500ms;
-}
-
-#player #volume-slider.visible.safari {
-  display: initial;
-}
-
-#player #volume-slider.safari {
-  display: none;
-}
-
 /* ========================= */
 /* NOTE: Style volume slider */
 /* ========================= */
@@ -330,6 +311,52 @@
   height: 16px;
   width: 16px;
   box-shadow: var(--slider-and-track-shadow);
+}
+
+/* ============================== */
+/* NOTE: Volume slider transition */
+/* ============================== */
+#player #volume-slider.visible {
+  width: 100%;
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+#player #volume-slider.visible::-webkit-slider-thumb {
+  height: 16px;
+  width: 16px;
+}
+
+/* Firefox */
+#player #volume-slider.visible::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+}
+
+#player #volume-slider {
+  width: 0;
+  transition: all ease-in-out 500ms;
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+#player #volume-slider::-webkit-slider-thumb {
+  height: 0;
+  width: 0;
+  transition: all ease-in-out 500ms;
+}
+
+/* Firefox */
+#player #volume-slider::-moz-range-thumb {
+  height: 0;
+  width: 0;
+  transition: all ease-in-out 500ms;
+}
+
+#player #volume-slider.visible.safari {
+  display: initial;
+}
+
+#player #volume-slider.safari {
+  display: none;
 }
 
 /* ======================================== */
