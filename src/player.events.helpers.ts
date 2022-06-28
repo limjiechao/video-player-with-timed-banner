@@ -1,8 +1,6 @@
 import {
   fullScreenEnterIcon,
   fullScreenExitIcon,
-  pauseIcon,
-  playIcon,
   video,
   videoOuterContainer,
   volumeButton,
@@ -44,20 +42,6 @@ export const removeFullScreenClassToVideoElementIfIosSafari = () => {
   const isIosSafariBrowser = checkIsIosSafari();
 
   isIosSafariBrowser && video.classList.remove('full-screen');
-};
-
-export const removePresetVideoDimensions = () => {
-  if (video.height && video.width) {
-    video.removeAttribute('height');
-    video.removeAttribute('width');
-    video.classList.add('full-width');
-  }
-
-  const removeVideoDimensionAttributes = () => {
-    video.removeEventListener('loadedmetadata', removeVideoDimensionAttributes);
-  };
-
-  video.addEventListener('loadedmetadata', removeVideoDimensionAttributes);
 };
 
 export const getVideoDuration = async () => {
@@ -103,21 +87,6 @@ export const playOrPauseVideo = () => {
     }
     case false: {
       video.pause();
-      break;
-    }
-  }
-};
-
-export const toggleBetweenPlayAndPauseIcon = () => {
-  switch (video.paused) {
-    case true: {
-      pauseIcon.classList.remove('visible');
-      playIcon.classList.add('visible');
-      break;
-    }
-    case false: {
-      playIcon.classList.remove('visible');
-      pauseIcon.classList.add('visible');
       break;
     }
   }
